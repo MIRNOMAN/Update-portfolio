@@ -1,6 +1,19 @@
+import { useRef } from 'react';
+import emailjs from '@emailjs/browser';
 
+export const Contact = () => {
+    const form = useRef();
 
-const Contact = () => {
+    const sendEmail = (e) => {
+        e.preventDefault();
+    
+        emailjs.sendForm('service_4416tnf', 'template_nyz5jhp', form.current, 'MBW_FuVEPwnCYST8r')
+          .then((result) => {
+              console.log(result.text);
+          }, (error) => {
+              console.log(error.text);
+          });
+      };
   return (
 
     <div className="lg:px-20 mt-16">
@@ -51,20 +64,20 @@ const Contact = () => {
                 </div>
                 <div className="column right">
                     <div className="text">Message me</div>
-                    <form >
+                    <form ref={form} onSubmit={sendEmail}>
                         <div className="fields">
                             <div className="field name">
-                                <input  type="text" id="name" placeholder="Name" required />
+                                <input  type="text" id="name" name='from_name' placeholder="Name" required />
                             </div>
                             <div className="field email">
-                                <input type="email" id="email" placeholder="Email" required />
+                                <input type="email" id="email" name='from_email' placeholder="Email" required />
                             </div>
                         </div>
                         <div className="field textarea">
-                            <textarea cols="20" rows="20" id="message" placeholder="Enter your message.." required></textarea>
+                            <textarea cols="20" rows="20" name='message' id="message" placeholder="Enter your message.." required></textarea>
                         </div>
                         <div className="button">
-                            <button onClick="sendMail()" type="submit">Send message</button>
+                            <button  type="submit" value="Send">Send message</button>
                         </div>
                     </form>
                 </div>
